@@ -8,6 +8,7 @@ This code creates a **Resource Group** in Azure.
 ```hcl
 provider "azurerm" {
   features {}
+  subscription_id = "your-subscription-id"
 }
 
 resource "azurerm_resource_group" "example" {
