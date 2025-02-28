@@ -27,6 +27,15 @@ output "resource_group_name" {
 This creates a **VNet with a subnet**.
 
 ```hcl
+provider "azurerm" {
+  features {}
+}
+
+resource "azurerm_resource_group" "example" {
+  name     = "example-resources"
+  location = "East US"
+}
+
 resource "azurerm_virtual_network" "example" {
   name                = "vnet-example"
   location            = azurerm_resource_group.example.location
