@@ -29,6 +29,7 @@ This creates a **VNet with a subnet**.
 ```hcl
 provider "azurerm" {
   features {}
+ subscription_id = "ebdc02d7-ee1e-4e7f-9874-b0408df8b29b"
 }
 
 resource "azurerm_resource_group" "example" {
