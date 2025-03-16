@@ -25,19 +25,21 @@ resource "azurerm_service_plan" "example" {
   sku_name            = "F1" # Changed from B1 to F1
 }
 
-resource "azurerm_app_service" "example" {
+resource "azurerm_linux_web_app" "example" {
   name                = "webapp-example-902828"
   location            = azurerm_resource_group.example.location
   resource_group_name = azurerm_resource_group.example.name
-  app_service_plan_id = azurerm_service_plan.example.id
+  service_plan_id     = azurerm_service_plan.example.id
 
   site_config {
-    linux_fx_version = "NODE|14-lts"
+    application_stack {
+      node_version = "14-lts"
+    }
   }
 
   depends_on = [azurerm_service_plan.example, azurerm_resource_group.example] # Ensure dependencies are created first
 }
 
 output "web_app_url" {
-  value = azurerm_app_service.example.default_site_hostname
+  value = azurerm_linux_web_app.example.default_hostname
 }
