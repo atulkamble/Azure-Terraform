@@ -14,7 +14,7 @@ provider "azurerm" {
 
 resource "azurerm_resource_group" "example" {
   name     = "example-resource-group"
-  location = "East US"
+  location = "West US" # Changed from East US to West US
 }
 
 resource "azurerm_service_plan" "example" {
@@ -22,11 +22,11 @@ resource "azurerm_service_plan" "example" {
   location            = azurerm_resource_group.example.location
   resource_group_name = azurerm_resource_group.example.name
   os_type             = "Linux"
-  sku_name            = "B1"
+  sku_name            = "F1" # Changed from B1 to F1
 }
 
 resource "azurerm_app_service" "example" {
-  name                = "webapp-example"
+  name                = "webapp-example-902828"
   location            = azurerm_resource_group.example.location
   resource_group_name = azurerm_resource_group.example.name
   app_service_plan_id = azurerm_service_plan.example.id
@@ -34,6 +34,8 @@ resource "azurerm_app_service" "example" {
   site_config {
     linux_fx_version = "NODE|14-lts"
   }
+
+  depends_on = [azurerm_service_plan.example, azurerm_resource_group.example] # Ensure dependencies are created first
 }
 
 output "web_app_url" {
